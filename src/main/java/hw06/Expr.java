@@ -35,15 +35,18 @@ record Expr(String text) {
                 continue;
             }
 
-            // TODO:
-            // if (ch.equals(")")) {
-            //   ...
+            if (ch.equals(")")) {
+                String op2 = stack.pop();
+                String op = stack.pop();
+                String op1 = stack.pop();
+                String result = applyOp(op1, op, op2);
+                stack.push(result);
+            }
         }
 
         try {
             return Integer.parseInt(stack.pop());
-        }
-        catch (NumberFormatException ee) {
+        } catch (NumberFormatException ee) {
             dumpStack();
             throw new RuntimeException("expected number: " + ee.toString());
         }
